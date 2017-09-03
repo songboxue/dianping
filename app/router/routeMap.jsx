@@ -10,9 +10,12 @@ import Search from '../containers/Search'
 import Detail from '../containers/Detail'
 import NotFound from '../containers/404'
 
+import configureStore from '../store'
+
 // 如果是大型项目，router部分就需要做更加复杂的配置
 // 参见 https://github.com/reactjs/react-router/tree/master/examples/huge-apps
 
+const store = configureStore();
 class RouteMap extends React.Component {
     render() {
         return (
