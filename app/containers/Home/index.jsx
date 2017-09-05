@@ -1,6 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import Header from '../../components/Header'
+import Carousel from '../../components/Carousel'
+import Ad from './subpage/Ad'
+import List from './subpage/List'
 
 class Home extends React.Component{
 	constructor(props, context) {
@@ -10,10 +15,26 @@ class Home extends React.Component{
 	render(){
 		return(
 			<div>
-				<Header />
+				<Header cityName={this.props.userinfo.cityName}/>
+				<Carousel/>
+				<Ad/>
+				<List cityName={this.props.userinfo.cityName}/>
 			</div>
 		)
 	}
 }
 
-export default Home
+function mapStateToProps(state){
+	return{
+		userinfo : state.userinfo
+	}
+}
+
+function mapDispatchToProps(dispatch){
+	return{}
+}
+
+export default connect(
+	mapStateToProps,
+  	mapDispatchToProps
+)(Home)
