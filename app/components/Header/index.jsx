@@ -1,5 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { Link } from 'react-router'
 import './style.less'
 class Header extends React.Component{
 	constructor(props, context) {
@@ -11,8 +12,10 @@ class Header extends React.Component{
 		return(
 			<div className="clear-fix home-header">
 				<div className="float-left home-location">
-					<span>{this.props.cityName}</span>
-					<i className="icon-angle-down"></i>
+					<Link to='/city'>
+						<span>{this.props.cityName}</span>
+						<i className="icon-angle-down"></i>
+					</Link>
 				</div>
 				<div className="float-right home-user">
 					<i className="icon-user"></i>

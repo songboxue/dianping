@@ -76,7 +76,7 @@ module.exports = {
         hot: true,  // 使用热加载插件 HotModuleReplacementPlugin
         disableHostCheck: true,
         host: "0.0.0.0",
-        port: 8000
+        port: 8080
     }
 }
 

@@ -9,13 +9,13 @@ class List extends React.Component{
 
 
 	render(){
-		console.log(this.props.data);
+		// console.log(this.props.data);
 		
 		return(
 			<div>
 				<ul>
 					{this.props.data.map((item,index)=>{
-						return <li className="rec-list">
+						return <li key={index} className="rec-list">
 									<div className="float-left list-img">
 										<img src={item.img} alt={item.title}/>
 									</div>

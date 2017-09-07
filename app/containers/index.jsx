@@ -27,10 +27,9 @@ class App extends React.Component{
 	}
 
 	componentDidMount(){
+		
+		let cityName = localStorage.getItem('CURRENT_CITY')||"北京"
 
-		localStorage.setItem('CURRENT_CITY','南京')
-		let cityName = localStorage.getItem('CURRENT_CITY')
-		cityName = (cityName==null)?'北京':cityName
 
 		this.props.userInfoActions.update({
 			cityName : cityName
