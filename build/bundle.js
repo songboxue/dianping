@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "67240e92b702de93fe9b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1dde70b75fb9b6c5746c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -31237,7 +31237,7 @@
 	    options = options || {};
 	    var index = parseInt(options.startSlide, 10) || 0;
 	    var speed = options.speed || 300;
-	    options.continuous = options.continuous !== undefined ? options.continuous : true;
+	    var continuous = options.continuous = options.continuous !== undefined ? options.continuous : true;
 
 	    function setup() {
 
@@ -31246,10 +31246,10 @@
 	      length = slides.length;
 
 	      // set continuous to false if only one slide
-	      if (slides.length < 2) options.continuous = false;
+	      continuous = slides.length < 2 ? false : options.continuous;
 
 	      //special case if two slides
-	      if (browser.transitions && options.continuous && slides.length < 3) {
+	      if (browser.transitions && continuous && slides.length < 3) {
 	        element.appendChild(slides[0].cloneNode(true));
 	        element.appendChild(element.children[1].cloneNode(true));
 	        slides = element.children;
@@ -31259,7 +31259,7 @@
 	      slidePos = new Array(slides.length);
 
 	      // determine width of each slide
-	      width = container.getBoundingClientRect().width || container.offsetWidth;
+	      width = Math.round(container.getBoundingClientRect().width || container.offsetWidth);
 
 	      element.style.width = (slides.length * width) + 'px';
 
@@ -31280,7 +31280,7 @@
 	      }
 
 	      // reposition elements before and after index
-	      if (options.continuous && browser.transitions) {
+	      if (continuous && browser.transitions) {
 	        move(circle(index-1), -width, 0);
 	        move(circle(index+1), width, 0);
 	      }
@@ -31293,14 +31293,14 @@
 
 	    function prev() {
 
-	      if (options.continuous) slide(index-1);
+	      if (continuous) slide(index-1);
 	      else if (index) slide(index-1);
 
 	    }
 
 	    function next() {
 
-	      if (options.continuous) slide(index+1);
+	      if (continuous) slide(index+1);
 	      else if (index < slides.length - 1) slide(index+1);
 
 	    }
@@ -31322,7 +31322,7 @@
 	        var direction = Math.abs(index-to) / (index-to); // 1: backward, -1: forward
 
 	        // get the actual position of the slide
-	        if (options.continuous) {
+	        if (continuous) {
 	          var natural_direction = direction;
 	          direction = -slidePos[circle(to)] / width;
 
@@ -31342,7 +31342,7 @@
 	        move(index, width * direction, slideSpeed || speed);
 	        move(to, 0, slideSpeed || speed);
 
-	        if (options.continuous) move(circle(to - direction), -(width * direction), 0); // we need to get the next in place
+	        if (continuous) move(circle(to - direction), -(width * direction), 0); // we need to get the next in place
 
 	      } else {
 
@@ -31422,7 +31422,7 @@
 	    var interval;
 
 	    function begin() {
-
+	      clearTimeout(interval);
 	      interval = setTimeout(next, delay);
 
 	    }
@@ -31492,7 +31492,7 @@
 	        // ensure swiping with one touch and not pinching
 	        if ( event.touches.length > 1 || event.scale && event.scale !== 1) return;
 
-	        if (options.disableScroll) event.preventDefault();
+	        if (options.disableScroll) return;
 
 	        var touches = event.touches[0];
 
@@ -31517,7 +31517,7 @@
 	          stop();
 
 	          // increase resistance if first or last slide
-	          if (options.continuous) { // we don't add resistance at the end
+	          if (continuous) { // we don't add resistance at the end
 
 	            translate(circle(index-1), delta.x + slidePos[circle(index-1)], 0);
 	            translate(index, delta.x + slidePos[index], 0);
@@ -31560,7 +31560,7 @@
 	              !index && delta.x > 0 ||                      // if first slide and slide amt is greater than 0
 	              index == slides.length - 1 && delta.x < 0;    // or if last slide and slide amt is less than 0
 
-	        if (options.continuous) isPastBounds = false;
+	        if (continuous) isPastBounds = false;
 
 	        // determine direction of swipe (true:right, false:left)
 	        var direction = delta.x < 0;
@@ -31572,7 +31572,7 @@
 
 	            if (direction) {
 
-	              if (options.continuous) { // we need to get the next in this direction in place
+	              if (continuous) { // we need to get the next in this direction in place
 
 	                move(circle(index-1), -width, 0);
 	                move(circle(index+2), width, 0);
@@ -31586,7 +31586,7 @@
 	              index = circle(index+1);
 
 	            } else {
-	              if (options.continuous) { // we need to get the next in this direction in place
+	              if (continuous) { // we need to get the next in this direction in place
 
 	                move(circle(index+1), width, 0);
 	                move(circle(index-2), -width, 0);
@@ -31605,7 +31605,7 @@
 
 	          } else {
 
-	            if (options.continuous) {
+	            if (continuous) {
 
 	              move(circle(index-1), -width, speed);
 	              move(index, 0, speed);
@@ -31621,12 +31621,11 @@
 	          }
 
 	        }
-	        
-	        delay = options.auto || 0;
 
 	        // kill touchmove and touchend event listeners until touchstart called again
 	        element.removeEventListener('touchmove', events, false);
 	        element.removeEventListener('touchend', events, false);
+	        element.removeEventListener('touchforcechange', function() {}, false);
 
 	      },
 	      transitionEnd: function(event) {
@@ -31654,7 +31653,10 @@
 	    if (browser.addEventListener) {
 
 	      // set touchstart event on element
-	      if (browser.touch) element.addEventListener('touchstart', events, false);
+	      if (browser.touch) {
+	        element.addEventListener('touchstart', events, false);
+	        element.addEventListener('touchforcechange', function() {}, false);
+	      }
 
 	      if (browser.transitions) {
 	        element.addEventListener('webkitTransitionEnd', events, false);
@@ -34732,7 +34734,8 @@
 
 		switch (action.type) {
 			case actionTypes.USERINFO_UPDATE:
-				return action.data;
+				// return action.data
+				return Object.assign({}, state, action.data);
 			default:
 				return state;
 		}
@@ -34840,7 +34843,7 @@
 /* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "1419968ad0b57aca3a88d5046d43ed88.svg";
+	module.exports = __webpack_require__.p + "29e88ebc08df51d79d47b33f079c110e.svg";
 
 /***/ })
 /******/ ]);
