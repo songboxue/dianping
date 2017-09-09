@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Link } from 'react-router'
+import SearchInput from '../SearchInput'
 import './style.less'
 class Header extends React.Component{
 	constructor(props, context) {
@@ -20,16 +21,7 @@ class Header extends React.Component{
 				<div className="float-right home-user">
 					<i className="icon-user"></i>
 				</div>
-				<div className="search-area">
-					<div className="float-left icon-div">
-						<i className="icon-search"></i>
-					</div>
-					
-					<div className="input-div">
-						<input type="text" placeholder="请输入关键字"/>
-					</div>
-										
-				</div>
+				<SearchInput/>
 				
 			</div>
 		)
