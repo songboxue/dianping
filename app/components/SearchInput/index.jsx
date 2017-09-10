@@ -3,9 +3,12 @@ import { render } from 'react-dom'
 import { hashHistory } from 'react-router'
 import './style.less'
 
+
 class SearchInput extends React.Component{
+
 	constructor(props, context) {
         super(props, context);
+        
         this.state = ({
         	value : ''
         })
@@ -22,7 +25,7 @@ class SearchInput extends React.Component{
 				<div className="input-div">
 					<input type="text" placeholder="请输入关键字"
 						onChange={this.changeValue.bind(this)}
-						value={this.state.value}
+						value = {this.state.value}
 						onKeyDown={this.doSearch.bind(this)}
 					/>
 				</div>									
@@ -30,6 +33,7 @@ class SearchInput extends React.Component{
 		)
 	}
 	
+
 	changeValue(e){
 		this.setState({
 			value : e.target.value
@@ -63,7 +67,6 @@ class SearchInput extends React.Component{
 		}
 		hashHistory.push(uri)
 	}
-		
 
 
 }

@@ -13,6 +13,6 @@ export function getList(city,page){
 	var ListInfo = fetch('/api/homelist/' + encodeURIComponent(city) + '/' + page,{
 		credentials: 'include', 
 		headers: { 'Accept': 'application/json, text/plain, */*' }
-	})
+	}).catch(error => console.log("network error",error))
 	return ListInfo;
 }

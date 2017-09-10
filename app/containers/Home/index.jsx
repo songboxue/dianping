@@ -18,6 +18,7 @@ class Home extends React.Component{
 				<Header cityName={this.props.userinfo.cityName}/>
 				<Carousel/>
 				<Ad/>
+				<h2 className="list-title">猜你喜欢</h2>
 				<List cityName={this.props.userinfo.cityName}/>
 			</div>
 		)

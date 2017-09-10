@@ -33,7 +33,7 @@ class City extends React.Component{
 		var userinfo = this.props.userinfo;
 		userinfo.cityName = newCity;
 		this.props.userInfoActions.update(userinfo);
-
+		
 		//修改localStorage
 		localStorage.setItem('CURRENT_CITY',newCity);
 
