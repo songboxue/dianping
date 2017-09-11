@@ -11,8 +11,8 @@ class Comment extends React.Component{
 
 	render(){
 		var dataArr = [];
-		if(this.props.data.data){
-			dataArr = this.props.data.data
+		if(this.props.data){
+			dataArr = this.props.data
 		}
 		return(
 			<div>
