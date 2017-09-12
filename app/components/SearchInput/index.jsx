@@ -8,9 +8,9 @@ class SearchInput extends React.Component{
 
 	constructor(props, context) {
         super(props, context);
-        
+        var a = props.keyword || ''
         this.state = ({
-        	value : ''
+        	value : a
         })
     }
 
@@ -20,8 +20,7 @@ class SearchInput extends React.Component{
 			<div className="search-area">
 				<div className="float-left icon-div" onClick={this.doSearch.bind(this)}>
 					<i className="icon-search"></i>
-				</div>
-				
+				</div>				
 				<div className="input-div">
 					<input type="text" placeholder="请输入关键字"
 						onChange={this.changeValue.bind(this)}

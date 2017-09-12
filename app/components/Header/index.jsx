@@ -19,7 +19,9 @@ class Header extends React.Component{
 					</Link>
 				</div>
 				<div className="float-right home-user">
-					<i className="icon-user"></i>
+					<Link to='/login'>
+						<i className="icon-user"></i>
+					</Link>					
 				</div>
 				<SearchInput/>
 				

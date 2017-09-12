@@ -8,7 +8,7 @@ import SearchList from './subpage/List'
 class Search extends React.Component{
 	constructor(props,context){
 		super(props,context);
-		this.state = {
+		this.state = {			
 			cityName : '南京'
 		}
 	}
